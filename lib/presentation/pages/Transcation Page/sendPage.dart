@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:blockwallet/services/ethereum_service.dart';
-import 'package:flutter/material.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 class Sendpage extends StatefulWidget {
   const Sendpage({super.key});
@@ -17,14 +17,7 @@ class _SendpageState extends State<Sendpage> {
 
   String txHash = "";
   String fullBalance = "0";
-  String decimalBalance = "000"; // 3 decimal places
-
-  @override
-  void initState() {
-    super.initState();
-    // Initial fetch
-    // Auto-refresh balance every 5 seconds
-  }
+  String decimalBalance = "000";
 
   @override
   void dispose() {
@@ -36,23 +29,47 @@ class _SendpageState extends State<Sendpage> {
   /// Function to send Ether
   void sendEther() async {
     final address = addressController.text;
-
-    // Check if the address is valid (starts with "0x" and has 42 characters)
     if (address.length == 42 && address.startsWith("0x")) {
       final receiverAddress = EthereumAddress.fromHex(address);
-      final amountInWei = BigInt.from(
-          double.parse(amountController.text) * 1e18); // Convert Ether to Wei
+      final amountInWei =
+          BigInt.from(double.parse(amountController.text) * 1e18);
 
       final result = await ethService.sendEther(receiverAddress, amountInWei);
       setState(() {
         txHash = result;
       });
     } else {
-      // Address is invalid, show error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please enter a valid Ethereum address')),
       );
     }
+  }
+
+  /// Open QR Scanner to Scan Address
+  void openQRScanner() {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: SizedBox(
+          width: 300,
+          height: 400,
+          child: MobileScanner(
+            onDetect: (capture) {
+              final List<Barcode> barcodes = capture.barcodes;
+              for (final barcode in barcodes) {
+                if (barcode.rawValue != null) {
+                  setState(() {
+                    addressController.text = barcode.rawValue!;
+                  });
+                  Navigator.pop(context);
+                  break;
+                }
+              }
+            },
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -60,17 +77,17 @@ class _SendpageState extends State<Sendpage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Send Money",
+          "Send",
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
             fontFamily: 'Poppins',
-            color: Color(0xFFAEAEAE),
+            color: Colors.black54,
           ),
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16), // Adds padding for better UI
+        padding: EdgeInsets.all(16),
         children: [
           TextField(
             controller: addressController,
@@ -80,21 +97,23 @@ class _SendpageState extends State<Sendpage> {
                 fontSize: 20,
                 fontWeight: FontWeight.w400,
                 fontFamily: 'Poppins',
-                color: Colors.black,
+                color: Colors.grey[600],
               ),
               border: OutlineInputBorder(
-                // Adds a default border
-                borderRadius: BorderRadius.circular(10), // Rounded corners
-                borderSide: BorderSide(color: Colors.black, width: 2),
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.grey, width: 2),
               ),
               focusedBorder: OutlineInputBorder(
-                // Border when focused
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Colors.blue, width: 2),
               ),
+              suffixIcon: IconButton(
+                icon: Icon(Icons.qr_code_scanner, color: Colors.blue),
+                onPressed: openQRScanner,
+              ),
             ),
           ),
-          SizedBox(height: 16), // Spacing between text fields
+          SizedBox(height: 16),
           TextField(
             controller: amountController,
             decoration: InputDecoration(
@@ -103,33 +122,23 @@ class _SendpageState extends State<Sendpage> {
                 fontSize: 20,
                 fontWeight: FontWeight.w400,
                 fontFamily: 'Poppins',
-                color: Colors.black,
+                color: Colors.grey[600],
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Colors.black, width: 2),
+                borderSide: BorderSide(color: Colors.grey, width: 2),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Colors.blue, width: 2),
               ),
             ),
-            keyboardType: TextInputType.number, // Numeric input for amount
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 4, top: 10),
-            child: Text("Currency: ETH",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                  fontFamily: 'Poppins',
-                  color: Colors.grey,
-                )),
+            keyboardType: TextInputType.number,
           ),
           SizedBox(height: 16),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFFAB9DFE), // Background color
+              backgroundColor: Color(0xFFAB9DFE),
               padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -141,7 +150,7 @@ class _SendpageState extends State<Sendpage> {
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Lato',
-                  color: Color.fromRGBO(255, 255, 255, 1),
+                  color: Colors.white,
                 )),
           ),
         ],

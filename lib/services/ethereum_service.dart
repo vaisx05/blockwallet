@@ -8,12 +8,9 @@ class EthereumService {
   final String rpcUrl = "http://192.168.0.103:7545"; // Ganache RPC URL
   // final String rpcUrl = "http://10.0.2.2:7545"; // For Android Emulator
   //final String rpcUrl = "http://127.0.0.1:7545"; // For Android Emulator
-// Ganache RPC URL
-  final String privateKey =
-      "0x3bc02863eb7de6921e9ccc46293b50f4e5f992688eae75f4330e05259504031f";
-  // "0x3bc02863eb7de6921e9ccc46293b50f4e5f992688eae75f4330e05259504031f"; // Sender's private key
-  final String contractAddress =
-      "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8"; // Contract Address
+
+  final String privateKey = "";
+  final String contractAddress = ""; // Contract Address
 
   late Web3Client client;
   late Credentials credentials;

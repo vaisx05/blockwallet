@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'package:blockwallet/presentation/pages/Transcation%20Page/ReceivePage.dart';
-import 'package:blockwallet/presentation/pages/Transcation%20Page/sendPage.dart';
 import 'package:blockwallet/services/ethereum_service.dart';
 import 'package:flutter/material.dart';
 import 'package:web3dart/web3dart.dart';
+
+import '../Transcation Page/ReceivePage.dart';
+import '../Transcation Page/sendPage.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
