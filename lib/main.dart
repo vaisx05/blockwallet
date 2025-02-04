@@ -1,3 +1,4 @@
+import 'package:blockwallet/HomePage.dart';
 import 'package:blockwallet/presentation/pages/Dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +12,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const Dashboard(),
+    return const MaterialApp(
+      home: Dashboard(),
     );
   }
 }

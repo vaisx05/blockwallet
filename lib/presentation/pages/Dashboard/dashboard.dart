@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:blockwallet/presentation/pages/profile/profilePage.dart';
 import 'package:blockwallet/services/ethereum_service.dart';
 import 'package:flutter/material.dart';
 import 'package:web3dart/web3dart.dart';
@@ -20,7 +21,7 @@ class _DashboardState extends State<Dashboard> {
 
   String txHash = "";
   String fullBalance = "0";
-  String decimalBalance = "000"; // 3 decimal places
+  String decimalBalance = "00"; // 3 decimal places
   Timer? balanceUpdateTimer;
 
   @override
@@ -45,7 +46,7 @@ class _DashboardState extends State<Dashboard> {
     setState(() {
       fullBalance = ethBalance.toInt().toString(); // Full ETH value
       decimalBalance = (ethBalance - ethBalance.toInt())
-          .toStringAsFixed(3)
+          .toStringAsFixed(2)
           .split('.')[1]; // Decimal part (3 digits)
     });
   }
@@ -79,8 +80,20 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Image.asset('assets/icons/icons8-add-50.png',
                       width: 60, height: 80),
-                  Image.asset('assets/icons/icons8-visa-50.png',
-                      width: 60, height: 80),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Profilepage()), // Create instance here
+                      );
+                    },
+                    child: Image.asset(
+                        'assets/icons/icons8-test-account-50.png',
+                        width: 60,
+                        height: 80),
+                  ),
                 ],
               ),
             ),
