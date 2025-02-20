@@ -86,7 +86,7 @@ class _DashboardState extends State<Dashboard> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                Profilepage()), // Create instance here
+                                const Profilepage()), // Create instance here
                       );
                     },
                     child: Image.asset(
@@ -111,7 +111,7 @@ class _DashboardState extends State<Dashboard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Current value",
                       style: TextStyle(
                           fontFamily: 'Lato',
@@ -123,7 +123,7 @@ class _DashboardState extends State<Dashboard> {
                         children: [
                           TextSpan(
                             text: "$fullBalance.", // Main amount
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 50,
                               color: Color(0xFF1C1717),
@@ -132,7 +132,7 @@ class _DashboardState extends State<Dashboard> {
                           ),
                           TextSpan(
                             text: "$decimalBalance ETH", // Decimal part
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 50, // Slightly smaller size (optional)
                               color:
@@ -150,8 +150,8 @@ class _DashboardState extends State<Dashboard> {
                       fetchBalance();
                       print("refreshed");
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(12.0),
                       child: Icon(
                         Icons.refresh,
                         size: 40,
@@ -160,7 +160,7 @@ class _DashboardState extends State<Dashboard> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -172,7 +172,7 @@ class _DashboardState extends State<Dashboard> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            Sendpage()), // Create instance here
+                            const Sendpage()), // Create instance here
                   );
                 },
                 child: ClipRRect(
@@ -180,8 +180,8 @@ class _DashboardState extends State<Dashboard> {
                   child: Container(
                     height: 70,
                     width: 180,
-                    color: Color(0xFFF2F2F4),
-                    child: Row(
+                    color: const Color(0xFFF2F2F4),
+                    child: const Row(
                       children: [
                         // Add Circle inside Row
                         SizedBox(
@@ -209,7 +209,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               GestureDetector(
@@ -218,7 +218,7 @@ class _DashboardState extends State<Dashboard> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            ReceivePage()), // Create instance here
+                            const ReceivePage()), // Create instance here
                   );
                 },
                 child: ClipRRect(
@@ -226,8 +226,8 @@ class _DashboardState extends State<Dashboard> {
                   child: Container(
                     height: 70,
                     width: 180,
-                    color: Color(0xFFF2F2F4),
-                    child: Row(
+                    color: const Color(0xFFF2F2F4),
+                    child: const Row(
                       children: [
                         SizedBox(
                           width: 2,

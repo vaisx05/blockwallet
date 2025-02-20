@@ -1,0 +1,54 @@
+Great! Now that you have the transaction hash 0xb6997aad1f298d3d5d62ab70f71a9c6559fea2594097212058b5c453b57ad784, you can check its status on your Ganache CLI using the following steps.
+
+Step 1: Check Transaction Receipt in Ganache CLI
+Run the following curl command to get the transaction receipt and check if it was successful:
+
+bash
+Copy code
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getTransactionReceipt","params":["0xcafe441b9b7df148aa9eec14accdcfd11821612e65a2e0a661093c93f490849d"],"id":1}' -H "Content-Type: application/json" http://localhost:8545
+Step 2: Response Example
+The response will look like this (the fields might vary):
+
+json
+Copy code
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "transactionHash": "0xb6997aad1f298d3d5d62ab70f71a9c6559fea2594097212058b5c453b57ad784",
+    "transactionIndex": "0x0",
+    "blockHash": "0xabc1234abcd5678efghijklmnopq1234567890",
+    "blockNumber": "0x1",  // Shows the block number
+    "from": "0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d",
+    "to": "0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0",
+    "gasUsed": "0x10",  // Shows the gas used in the transaction
+    "logs": [],
+    "status": "0x1"  // If 0x1, the transaction was successful
+  }
+}
+Step 3: Interpreting the Response
+transactionHash: This will match the hash you provided (0xb6997aad1f298d3d5d62ab70f71a9c6559fea2594097212058b5c453b57ad784).
+blockNumber: If this is set (e.g., 0x1), it means the transaction has been mined.
+status: "0x1" means the transaction was successful. If it’s "0x0", the transaction failed.
+gasUsed: This is the amount of gas consumed for the transaction.
+Step 4: Check Sender and Recipient Balances
+After confirming the transaction was successful, you can check the balances of the sender and recipient to ensure the amount was transferred.
+
+For example, to check the sender's balance:
+
+bash
+Copy code
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d", "latest"],"id":1}' -H "Content-Type: application/json" http://localhost:8545
+For the recipient's balance:
+
+bash
+Copy code
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0", "latest"],"id":1}' -H "Content-Type: application/json" http://localhost:8545
+Conclusion
+If the status is "0x1", the transaction was successful, and you can check the balances of the sender and recipient to ensure the transaction was processed.
+If you face any issues, feel free to let me know, and I can help troubleshoot!
+
+
+
+
+

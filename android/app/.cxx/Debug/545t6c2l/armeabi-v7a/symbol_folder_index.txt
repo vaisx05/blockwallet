@@ -1,0 +1,1 @@
+/home/sha/WinVol3/Projectsha/blockwallet/build/app/intermediates/cxx/Debug/545t6c2l/obj/armeabi-v7a

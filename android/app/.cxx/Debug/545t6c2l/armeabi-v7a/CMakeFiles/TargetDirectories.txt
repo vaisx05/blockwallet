@@ -1,0 +1,2 @@
+/home/sha/WinVol3/Projectsha/blockwallet/android/app/.cxx/Debug/545t6c2l/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/sha/WinVol3/Projectsha/blockwallet/android/app/.cxx/Debug/545t6c2l/armeabi-v7a/CMakeFiles/rebuild_cache.dir

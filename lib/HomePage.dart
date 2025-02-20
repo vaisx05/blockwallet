@@ -180,7 +180,8 @@ class _MapViewState extends State<MapView> {
               ),
             ),
             // Bottom section for input fields (fixed height)
-            SizedBox(
+            Container(
+              color: Colors.white,
               height: 300, // Set a fixed height for the bottom section
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

@@ -1,0 +1,269 @@
+import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
+import 'package:web3dart/web3dart.dart';
+import 'package:http/http.dart';
+
+class EthereumService {
+  //final String rpcUrl = "http://172.168.11.183:7545"; // Ganache RPC URL
+  final String rpcUrl = "http://192.168.0.101:7545"; // For Android Emulator
+  //final String rpcUrl = "http://127.0.0.1:7545"; // For Android Emulator
+
+  //final String privateKey =
+  //  "0x1a7013d295cea4985e88dc4f5891351fbcb02fb95524a939664726c4e7b86485"; //account 1
+
+  final String privateKey =
+      "0x64c049f21cc94c0f88f08293161e609e6c7fe433b89e5be6f20d851224928292"; //account 2
+  final String contractAddress =
+      "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8"; // Contract Address
+
+  late Web3Client client;
+  late Credentials credentials;
+  late EthereumAddress senderAddress;
+
+  EthereumService() {
+    client = Web3Client(rpcUrl, Client());
+    credentials = EthPrivateKey.fromHex(privateKey);
+    senderAddress = credentials.address;
+  }
+
+  /// Send Ether
+  Future<String> sendEther(
+      EthereumAddress receiverAddress, BigInt amountInWei) async {
+    try {
+      final transaction = Transaction(
+        from: senderAddress,
+        to: receiverAddress,
+        value: EtherAmount.fromUnitAndValue(EtherUnit.wei, amountInWei),
+        gasPrice: EtherAmount.inWei(
+            BigInt.from(1) * BigInt.from(1000000000)), // 1 Gwei
+        maxGas: 21000,
+      );
+
+      final txHash = await client.sendTransaction(
+        credentials,
+        transaction,
+        chainId: 1337, // Default Ganache chain ID
+      );
+      return txHash; // Return transaction hash
+    } catch (e) {
+      print("Error sending Ether: $e");
+      return "Error: $e";
+    }
+  }
+
+  /// Check Balance
+  Future<BigInt> getBalance(EthereumAddress address) async {
+    final balance = await client.getBalance(address);
+    return balance.getInWei;
+  }
+
+  Widget generateQRCode(String ethereumAddress) {
+    return QrImageView(
+      data: ethereumAddress,
+      version: QrVersions.auto,
+      size: 200.0,
+    );
+  }
+}
+ 
+
+//send page 
+import 'package:flutter/material.dart';
+import 'package:blockwallet/services/ethereum_service.dart';
+import 'package:web3dart/web3dart.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+
+class Sendpage extends StatefulWidget {
+  const Sendpage({super.key});
+
+  @override
+  State<Sendpage> createState() => _SendpageState();
+}
+
+class _SendpageState extends State<Sendpage> {
+  final EthereumService ethService = EthereumService();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
+
+  String txHash = "";
+  String fullBalance = "0";
+  String decimalBalance = "000";
+
+  @override
+  void dispose() {
+    addressController.dispose();
+    amountController.dispose();
+    super.dispose();
+  }
+
+  /// Function to send Ether
+  void sendEther() async {
+    final address = addressController.text;
+    if (address.length == 42 && address.startsWith("0x")) {
+      final receiverAddress = EthereumAddress.fromHex(address);
+      final amountInWei =
+          BigInt.from(double.parse(amountController.text) * 1e18);
+
+      final result = await ethService.sendEther(receiverAddress, amountInWei);
+      setState(() {
+        txHash = result;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a valid Ethereum address')),
+      );
+    }
+  }
+
+  /// Open QR Scanner to Scan Address
+  void openQRScanner() {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: SizedBox(
+          width: 300,
+          height: 400,
+          child: MobileScanner(
+            onDetect: (capture) {
+              final List<Barcode> barcodes = capture.barcodes;
+              for (final barcode in barcodes) {
+                if (barcode.rawValue != null) {
+                  setState(() {
+                    addressController.text = barcode.rawValue!;
+                  });
+                  Navigator.pop(context);
+                  break;
+                }
+              }
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Send",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Poppins',
+            color: Colors.black54,
+          ),
+        ),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          // Ethereum Address Field
+          TextField(
+            controller: addressController,
+            decoration: InputDecoration(
+              labelText: "Enter the address",
+              labelStyle: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Poppins',
+                color: Colors.grey[600],
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.grey, width: 2),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.blue, width: 2),
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(Icons.qr_code_scanner, color: Colors.blue),
+                onPressed: openQRScanner,
+              ),
+            ),
+          ),
+          SizedBox(height: 16),
+
+          // Amount Field
+          TextField(
+            controller: amountController,
+            decoration: InputDecoration(
+              labelText: "Enter the amount",
+              labelStyle: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Poppins',
+                color: Colors.grey[600],
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.grey, width: 2),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.blue, width: 2),
+              ),
+            ),
+            keyboardType: TextInputType.number,
+          ),
+          SizedBox(height: 16),
+
+          // Send Button
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFAB9DFE),
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: sendEther,
+            child: Text("SEND ETHER",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Lato',
+                  color: Colors.white,
+                )),
+          ),
+          
+          SizedBox(height: 20),
+          // QR Code for Sender's Address
+          Text(
+            'Your Ethereum Address QR Code:',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 10),
+          ethService.generateQRCode(ethService.senderAddress.hex), // Display Sender's QR Code
+        ],
+      ),
+    );
+  }
+}
+
+// exisitng contract 
+
+// Example: Wallet.sol
+pragma solidity ^0.8.0;
+
+contract Wallet {
+    mapping(address => uint) public balances;
+
+    function deposit() public payable {
+        balances[msg.sender] += msg.value;
+    }
+
+    function withdraw(uint amount) public {
+        require(balances[msg.sender] >= amount, "Insufficient balance");
+        balances[msg.sender] -= amount;
+        payable(msg.sender).transfer(amount);
+    }
+
+    function getBalance() public view returns (uint) {
+        return balances[msg.sender];
+    }
+}
+

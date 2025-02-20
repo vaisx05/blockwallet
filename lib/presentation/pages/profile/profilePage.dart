@@ -1,3 +1,4 @@
+import 'package:blockwallet/HomePage.dart';
 import 'package:flutter/material.dart';
 
 import '../../../services/ethereum_service.dart';
@@ -96,6 +97,23 @@ class _ProfilepageState extends State<Profilepage> {
               createInfoTile(
                 title: 'Current Location',
                 img: 'assets/icons/icons8-location-48.png',
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MapView(),
+                    ),
+                  );
+                },
+                child: createInfoTile(
+                  title: 'Add Location',
+                  img: 'assets/icons/icons8-location-48.png',
+                ),
               ),
             ]),
           )

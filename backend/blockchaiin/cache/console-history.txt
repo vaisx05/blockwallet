@@ -1,0 +1,18 @@
+.
+exit();
+exit
+exit()
+exit
+console.log("Balance:", ethers.utils.formatEther(balance));
+// Convert the balance from BigNumber to human-readable Ether format
+const balance = await wallet.getBalance();
+const wallet = await ethers.getContractAt("Wallet", "0x0bd2C7340D640AD2b604502c18B4e9618e43e7c3");
+console.log("Balance:", ethers.utils.formatEther(balance));
+// Convert the balance from BigNumber to human-readable Ether format
+const balance = await wallet.getBalance();
+console.log("Balance:", balance);const wallet = await ethers.getContractAt("Wallet", "0x0bd2C7340D640AD2b604502c18B4e9618e43e7c3");
+const wallet = await ethers.getContractAt("Wallet","0x0bd2C7340D640AD2b604502c18B4e9618e43e7c3");
+console.log("Balance:", balance);
+const balance = await wallet.getBalance();
+const wallet = await ethers.getContractAt("Wallet","0x0bd2C7340D640AD2b604502c18B4e9618e43e7c3");
+npx hardhat console --network localhost

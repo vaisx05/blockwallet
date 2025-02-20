@@ -23,6 +23,10 @@ dependencies:
   http: ^1.2.2
   maps_toolkit: ^3.1.0
   flutter_launcher_icons: ^0.14.3
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  build_runner: ^2.4.15
+  hive_generator: ^2.0.1
 
 
   
@@ -49,6 +53,7 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/logo/
+    - assets/abi/
 
   fonts:
     - family: Lato

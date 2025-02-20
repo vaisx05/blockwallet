@@ -5,17 +5,19 @@ import 'package:web3dart/web3dart.dart';
 import 'package:http/http.dart';
 
 class EthereumService {
-  final String rpcUrl = "http://192.168.0.105:7545"; // Ganache RPC URL
-  // final String rpcUrl = "http://10.0.2.2:7545"; // For Android Emulator
+  //final String rpcUrl = "http://172.168.11.183:7545"; // Ganache RPC URL
+  final String rpcUrl = "http://172.17.17.210:7545"; // For Android Emulator
   //final String rpcUrl = "http://127.0.0.1:7545"; // For Android Emulator
 
-  //// final String privateKey =
-  // "0x1a7013d295cea4985e88dc4f5891351fbcb02fb95524a939664726c4e7b86485"; //account 1
+  //final String privateKey =
+  //  "0x1a7013d295cea4985e88dc4f5891351fbcb02fb95524a939664726c4e7b86485"; //account 1
 
   final String privateKey =
-      "0x4f46ab5b9211e59dcbd85f23a76f295a3f80909f3cf23472b1c2318b25e589f5"; //account 2
-  final String contractAddress =
-      "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8"; // Contract Address
+      "0xfdcd05de0be19a735c3669a3815d0ea240efc99b3e93f9b6bf35c8c4b90bfa1e";
+
+  final String contractAddress = "0x1dfcde8331779a3ca41e789620ce5afaa5871f86";
+  //final String contractAddress = "0x43b7385A6d048dE2f1727E688A6Cdd9638B48905";
+  //   "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8"; // Contract Address
 
   late Web3Client client;
   late Credentials credentials;

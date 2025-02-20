@@ -1,0 +1,2 @@
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x696951E7B091E401358d5A46a6f3FAE7c1D12201", "latest"],"id":1}' -H "Content-Type: application/json" http://http://172.17.17.210:7545
+For the recipient's balance:

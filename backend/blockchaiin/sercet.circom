@@ -1,0 +1,1 @@
+pragma circom 2.0.0;  template SecretCheck() {     signal input x;  // The secret input     signal input y;  // The public hash of x     signal output valid;      valid <== (y == x * x); // Example: Proving knowledge of square root }  component main = SecretCheck();

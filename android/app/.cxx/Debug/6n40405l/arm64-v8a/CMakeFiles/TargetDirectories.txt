@@ -1,0 +1,2 @@
+/home/sha/WinVol3/eswarclg/withzkp/blockwallet/android/app/.cxx/Debug/6n40405l/arm64-v8a/CMakeFiles/edit_cache.dir
+/home/sha/WinVol3/eswarclg/withzkp/blockwallet/android/app/.cxx/Debug/6n40405l/arm64-v8a/CMakeFiles/rebuild_cache.dir
