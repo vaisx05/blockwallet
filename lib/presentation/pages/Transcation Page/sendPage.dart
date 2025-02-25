@@ -38,7 +38,7 @@ class _SendpageState extends State<Sendpage> {
 
   // Generates proof by calling the `/generate-proof` endpoint
   Future<Map<String, dynamic>> generateProof(String secretValue) async {
-    final url = Uri.parse('http://172.17.17.210:5000/generate-proof');
+    final url = Uri.parse('http://ip:port/generate-proof');
 
     final requestBody = {
       'secretValue': secretValue, // Secret value here
