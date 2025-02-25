@@ -1,8 +1,0 @@
-[sha] ~/WinVol3/Projectsha/blockwallet/backend/blockchaiin $ npx hardhat run scripts/deploy1.js --network localhost
-WARNING: You are currently using Node.js v23.7.0, which is not supported by Hardhat. This can lead to unexpected behavior. See https://hardhat.org/nodejs-versions
-
-
-Compiled 1 Solidity file successfully (evm target: paris).
-Deploying contracts with the account: 0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1
-Verifier contract deployed to: 0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab
-Wallet contract deployed to: 0x5b1869D9A4C187F2EAa108f3062412ecf0526b24
