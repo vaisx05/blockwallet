@@ -1,5 +1,0 @@
-def main(field a) -> field {  // Remove parentheses around field
-    field b = a * a;
-    return b;
-}
-
