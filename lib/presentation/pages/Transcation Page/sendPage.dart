@@ -61,55 +61,6 @@ class _SendpageState extends State<Sendpage> {
     }
   }
 
-  // Sends transaction with proof to `/sendWithZKP` endpoint
-  // Future<void> sendTransactionWithProof(String recipient, String amount,
-  //     Map<String, dynamic> proof, List<dynamic> publicInputs) async {
-  //   final url = Uri.parse('http://172.17.17.210:5000/sendWithZKP');
-
-  //   final requestPayload = {
-  //     'sender':
-  //         '0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d', // Example sender address
-  //     'recipient': recipient,
-  //     'amount': amount,
-  //     'proof': proof, // Proof returned from `/generate-proof`
-  //     'publicInputs':
-  //         publicInputs, // Public inputs returned from `/generate-proof`
-  //   };
-
-  //   try {
-  //     final response = await http.post(
-  //       url,
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: json.encode(requestPayload),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final responseData = json.decode(response.body);
-  //       // Show success dialog
-  //       showDialog(
-  //         context: context,
-  //         builder: (ctx) => AlertDialog(
-  //           title: const Text("Transaction Success"),
-  //           content:
-  //               Text("Transaction Hash: ${responseData['transactionHash']}"),
-  //           actions: [
-  //             TextButton(
-  //               onPressed: () {
-  //                 Navigator.of(ctx).pop();
-  //               },
-  //               child: const Text("OK"),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     } else {
-  //       throw Exception("Failed to send transaction: ${response.body}");
-  //     }
-  //   } catch (error) {
-  //     showErrorDialog("Error sending transaction: $error");
-  //   }
-  // }
-
   Future<void> sendTransactionWithProof(String recipient, String amount,
       Map<String, dynamic> proof, List<dynamic> publicInputs) async {
     final url = Uri.parse('http://172.17.17.210:5000/sendWithZKP');
